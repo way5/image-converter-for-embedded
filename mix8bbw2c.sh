@@ -5,13 +5,13 @@
 # Project: image2c (<<projectversion>>)
 # File Created: Monday, 29th June 2020 1:25:24 am
 # Author: sk
-# Last Modified: Thursday, 28th October 2021 5:06:00 pm
+# Last Modified: Thursday, 2nd February 2023 9:23:52 pm
 # Modified By: Sergey Ko
 # License: CC-BY-NC-4.0 (https://creativecommons.org/licenses/by-nc/4.0/legalcode)
 # ###################################################################################
 # CHANGELOG:
 # 2020-07-02	added alpha color option
-# 2020-07-24	improvements (the smalles image is the base btm, etc)
+# 2020-07-24	improvements
 # ###################################################################################
 #
 ARGS=$@
@@ -61,7 +61,7 @@ function lsinp {
     fi
 }
 function final_cleanup {
-    rm -R "$DRT" > /dev/null 2>&1
+    rm -r "$DRT" > /dev/null 2>&1
 }
 # check for magick
 if [ -z $(command -v convert) ]; then
@@ -110,7 +110,7 @@ fi
 if [ ! -d $DRT ]; then
     mkdir $DRT
 elif [ "$(ls -A $DRT)" ]; then
-    rm -R $(echo $DRT"/*") > /dev/null 2>&1
+    rm -r $(echo $DRT"/*") > /dev/null 2>&1
 fi
 
 # paths & names (input file should be an image)
@@ -164,7 +164,7 @@ for mf in $(ls -rSB $DRI); do
     fi
     # doing conversion
     (convert $mf +flip -strip $CMD1 -colorspace Gray \
-        -threshold 90% -define bmp:subtype=RGB565 bmp2:- | \
+        -threshold 90% -define bmp:subtype=RGB565 BMP2:- | \
         dd bs=26 skip=1  > ${FTMPS[$CNTR0]}) > /dev/null 2>&1
 
     if [ ! -s "${FTMPS[$CNTR0]}" ]; then

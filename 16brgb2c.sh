@@ -5,7 +5,7 @@
 # Project: image2c - 16bit color encoded image binary to RGB565 C/C++ array (see $VERS)
 # File Created: Sunday, 21st June 2020 8:18:16 pm
 # Author: sk
-# Last Modified: Thursday, 28th October 2021 5:06:07 pm
+# Last Modified: Wednesday, 1st February 2023 9:47:59 pm
 # Modified By: Sergey Ko
 # License: CC-BY-NC-4.0 (https://creativecommons.org/licenses/by-nc/4.0/legalcode)
 # ###################################################################################
@@ -44,10 +44,10 @@ function help {
     echo "  ------------------------------------------------"
     echo "   \033[1m-ls\033[0m             list all files from input dir,"
     echo "                   suitable for convertion"
-    echo "   \033[1m-cleanout\033[0m       to clean only \033[4moutput\033[0m directory"
-    echo "   \033[1m-clean\033[0m          to clean \033[4mALL\033[0m project directories"
+    echo "   \033[1m-clean\033[0m          to clean only \033[4moutput\033[0m directory"
+    echo "   \033[1m-purge\033[0m          to clean \033[4mALL\033[0m project directories"
     echo "  ------------------------------------------------"
-    echo "\n\033[33mDESCRIPTION:\033[0m The script converts RGB565 encoded bin files into 16-bit C-format.\n\
+    echo "\n\033[33mDESCRIPTION:\033[0m The script converts RGB565 encoded bin files into 16-bit C/C++ RAW pixel arrays.\n\
              Only ."$DI"/[RGB565].bin files can be used\n"
     exit 0
 }
@@ -96,7 +96,7 @@ for n in $ARGS; do
         if [ -z "$ALPHAC" ]; then
             help
         fi
-    elif [ "$n" = "-cleanout" ]; then
+    elif [ "$n" = "-clean" ]; then
         echo ""
         if [ "$(ls -A ${DRO})" ]; then
             rm $(echo $DRO"/*") > /dev/null 2>&1
@@ -106,7 +106,7 @@ for n in $ARGS; do
         fi
         echo ""
         exit 0
-    elif [ "$n" = "-clean" ]; then
+    elif [ "$n" = "-purge" ]; then
         echo ""
         if [ "$(ls -A $DRO)" ]; then
             rm $(echo $DRO"/*") > /dev/null 2>&1

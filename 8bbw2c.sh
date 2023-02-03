@@ -5,7 +5,7 @@
 # Project: image2c - B/W image to 8-bit C/C++ array (see $VERS)
 # File Created: Monday, 29th June 2020 1:25:24 am
 # Author: sk
-# Last Modified: Thursday, 28th October 2021 5:05:56 pm
+# Last Modified: Thursday, 2nd February 2023 9:35:10 am
 # Modified By: Sergey Ko
 # License: CC-BY-NC-4.0 (https://creativecommons.org/licenses/by-nc/4.0/legalcode)
 # ###################################################################################
@@ -21,7 +21,7 @@ DI="/in"
 DRO=$DR$DO
 DRI=$DR$DI
 VERS="1.1"
-GDT=$(date +"%d.%m.%Y %H:%m:%S")
+GDT=$(date +"%d/%m/%Y %H:%m:%S")
 # functions
 function help {
     echo "\033[32mUSAGE:\033[0m "$0" [-options] [filemame]\n"
@@ -34,8 +34,8 @@ function help {
     echo "  ------------------------------------------------"
     echo "   \033[1m-ls\033[0m             list all files from input dir,"
     echo "                   suitable for convertion"
-    echo "   \033[1m-cleanout\033[0m       to clean only \033[4moutput\033[0m directory"
-    echo "   \033[1m-clean\033[0m          to clean \033[4mALL\033[0m project directories"
+    echo "   \033[1m-clean\033[0m          to clean only \033[4moutput\033[0m directory"
+    echo "   \033[1m-purge\033[0m          to clean \033[4mALL\033[0m project directories"
     echo "  ------------------------------------------------"
     echo "\n\033[33mDESCRIPTION:\033[0m The script converts two color B/W image bin files\n\
              into 8-bit compressed C-format. \n\
@@ -70,9 +70,9 @@ fi
 # before all check if there any arguments
 if [ -z "$ARGS" ]; then
     TW=$(stty size | awk '{print $2}')
-    echo ""
+    echo
     echo "   \033[44;30;1m v"$VERS" \033[0m" | { N=$(((TW/2)-5)); perl -pe "s/^/' 'x$N/e" ; }
-    echo ""
+    echo
     help
     exit 0
 fi
@@ -87,18 +87,18 @@ for n in $ARGS; do
         INVT=1
     elif [ "$n" = "-td" ]; then
         TYPDFS=1
-    elif [ "$n" = "-cleanout" ]; then
-        echo ""
+    elif [ "$n" = "-clean" ]; then
+        echo
         if find $DRO -mindepth 1 | read; then
             rm $(echo $DRO"/*") > /dev/null 2>&1
             echo "    \033[100m ."$DO" \033[0m - emptied"
         else
             echo "    \033[100m ."$DO" \033[0m - no content"
-        fi
-        echo ""
+        file
+        echo
         exit 0
-    elif [ "$n" = "-clean" ]; then
-        echo ""
+    elif [ "$n" = "-purge" ]; then
+        echo
         if find $DRO -mindepth 1 | read; then
             rm $(echo $DRO"/*") > /dev/null 2>&1
             echo "    \033[100m ."$DO" \033[0m - emptied"
@@ -111,12 +111,12 @@ for n in $ARGS; do
         else
             echo "    \033[100m ."$DI"  \033[0m - no content"
         fi
-        echo ""
+        echo
         exit 0
     elif [ "$n" = "-ls" ]; then
-        echo ""
+        echo
         lsinp
-        echo ""
+        echo
         exit 0
     fi
     np=$n
@@ -147,7 +147,7 @@ fi
 if ! test -f "$FI"; then
     error "no such file :("
     lsinp
-    echo ""
+    echo
     help
 fi
 
@@ -167,9 +167,8 @@ if [ $INVT -eq 1 ]; then
     CMD1="-negate"
     MSG1="\033[1minverted\033[0m"
 fi
-(convert $FI +flip -strip $CMD1 -colorspace Gray \
--threshold 90% -define bmp:subtype=RGB565 bmp2:- | \
-dd bs=26 skip=1  > $FT) > /dev/null 2>&1
+convert $FI -flip -strip $CMD1 -colorspace Gray -threshold 90% -define bmp:subtype=RGB565 BMP2:- | \
+dd bs=1 skip=26 of=$FT 2>/dev/null
 
 if [ ! -s "$FT" ]; then
     error "something went wrong. check the source image..."
