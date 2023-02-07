@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-#
 # ###################################################################################
 # File: 16bin2rgb565.sh
 # Project: image2c - 16bit color encoded image binary to RGB565 C/C++ array (see $VERS)
@@ -12,7 +11,6 @@
 # CHANGELOG:
 # Jun 23, 2020 - Fixes + improvements
 # ###################################################################################
-#
 ARGS=$@
 ALPHA=0
 TYPDFS=0

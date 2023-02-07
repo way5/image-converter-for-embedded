@@ -49,26 +49,23 @@ converts images to binary or C/C++ RAW pixel array (RGB565 and RGB888). Tested o
         </tr><tr>
             <td>5</td>
             <td>Dominant (background) color</td>
-            <td>2</td>
+            <td>(2 * Bytes Per Pixel)</td>
         </tr><tr>
             <td>6</td>
             <td>Color as Alpha channel</td>
-            <td>2</td>
+            <td>(2 * Bytes Per Pixel)</td>
         </tr>
     </tbody>
 </table>
 
-<br>
-
->**PLEASE NOTE**: \
+>**INFO**: \
 The above scripts are using <code>in</code>, <code>out</code> and <code>.tmp</code> directories in order to seek for a source and store the final result accordingly.
 
-<br>
 
 ### [**mix8bbw2c.sh**](./mix8bbw2c.sh)
 converts a few similar images into the dependant scructure of binary arrays. The script tries to find an image that has the most similarities with all the others and creates *_base_bmp array. Then converts all the other images to binary, excluding the *_base_bmp block. In principle the logic is diplayed on the image below.
 
-![Image Compressor Logic](./doc/image_compressor_for_embedded_sk.jpg)
+![Image Compressor Logic](./doc/image_convert_compress_for_embed.jpg)
 
 In order to decode and display the binaries on the device you can use the following functions:
 
@@ -79,7 +76,8 @@ In order to decode and display the binaries on the device you can use the follow
 
 The following is an example of encoded *(using mix8bbw2c.sh script)* B/W chunked bitmaps:
 
-<pre><code>/**
+```c
+/**
  * fmt: 8-bit B/W chunked compressed image map
  * img: lcrtc7
  * bmp: lcrtc7_bmp (non-inverted)
@@ -113,11 +111,10 @@ const chunk8b_t working_chunk PROGMEM = {
     off_base_bmp,
     working_chunk_bmp,
     16, 16, 108
-};</cdoe></pre>
+};
+```
 
-<br/>
 
----
-| <div style="width:40px;text-align:center;"><img src="https://friconix.com/png/fi-ensuxs-warning-solid.png" alt="bugtracker"></div> | Please refer to [issues](https://github.com/way5/bmp-compressor-for-embedded/issues) :beetle: if you have any suggestion or found an error. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| <div style="text-align:center;"><img width="50px" height="40px" src="https://friconix.com/png/fi-ensuxs-warning-solid.png" alt="bugtracker"></div> | Please refer to [issues](https://github.com/way5/bmp-compressor-for-embedded/issues) :beetle: if you have any suggestion or found an error. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
 |:---:|:---|
 

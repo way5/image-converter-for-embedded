@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-#
 # ###################################################################################
 # File: mixer_8bbw2c.sh
 # Project: image2c (<<projectversion>>)
@@ -10,10 +9,9 @@
 # License: CC-BY-NC-4.0 (https://creativecommons.org/licenses/by-nc/4.0/legalcode)
 # ###################################################################################
 # CHANGELOG:
-# 2020-07-02	added alpha color option
-# 2020-07-24	improvements
+# 2020-07-02    added alpha color option
+# 2020-07-24    improvements
 # ###################################################################################
-#
 ARGS=$@
 INVT=0
 TYPDFS=0
